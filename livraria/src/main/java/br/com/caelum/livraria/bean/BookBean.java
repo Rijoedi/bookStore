@@ -34,6 +34,11 @@ public class BookBean implements Serializable {
 		this.book = new Book();
 	}
 	
+	public String formAuthor() {
+		System.out.println("Calling form Author");
+		return "author?faces-redirect~true";
+	}
+	
 	//Gets and Sets//
 	
 	public Book getBook() {
@@ -51,6 +56,7 @@ public class BookBean implements Serializable {
 	public void saveAuthor() {
 		Author author = new DAO<Author>(Author.class).searchForId(this.authorId);
 		this.book.addAuthor(author);
+		System.out.println("Write for: " + author.getName());
 	}
 	
 	public Integer getAuthorId() {
