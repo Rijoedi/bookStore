@@ -1,10 +1,12 @@
 package br.com.caelum.livraria.model;
 
+import javax.faces.bean.ViewScoped;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@ViewScoped
 public class Author {
 	
 	@Id
@@ -29,7 +31,9 @@ public class Author {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
+	public void removeAuthor(Author author) {
+		this.author.remove(author);
+	}
 
 }

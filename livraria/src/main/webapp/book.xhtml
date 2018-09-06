@@ -55,7 +55,7 @@
 				<f:ajax execute="author" render="authorsTable" />
 				<br />
 				<h:commandLink value="Create new Author"
-					action="author?faces-redirect=true" immediate="true" />
+					action="#{bookBean.formAuthor}" immediate="true" />
 			</h:commandButton>
 
 			<h:dataTable value="#{bookBean.authorsOfBook}" var="author"
@@ -63,15 +63,21 @@
 				<h:column>
 					<h:outputText value="#{author.name}" />
 				</h:column>
+				
+				<h:column>
+							<h:commandLink value="X" action="#{bookBean.removeAuthor(author)}"/>
+				</h:column>
+				
 			</h:dataTable>
 
 		</fieldset>
 		<h:commandButton value="Save" action="#{bookBean.save}">
-			<f:ajax execute="@form" render="@form :booksTable" />
+			<f:ajax execute="@form" render="@form :formBooksTable:booksTable" />
 		</h:commandButton>
 
 	</h:form>
-
+	
+	<h:form id="formBooksTable">
 	<h:dataTable value="#{bookBean.books}" var="book" id="booksTable">
 		<h:column>
 			<f:facet name="header">Title</f:facet>
@@ -84,16 +90,31 @@
 		<h:column>
 			<f:facet name="header">Price</f:facet>
 			<h:outputText value="#{book.price}" />
-		</h:column>
+		</h:column>	
 
 		<h:column>
 			<f:facet name="header">Data</f:facet>
 			<h:outputText value="#{book.releaseDate.time}">
 				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
 			</h:outputText>
-
 		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Edit</f:facet>
+			<h:commandLink value="Edit">
+				<f:setPropertyActionListener target="#{bookBean.book}" value="#{book}" />
+			</h:commandLink>
+			
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Remove</f:facet>
+			<h:commandLink value="Remove" action="#{bookBean.remove(book)}"/>
+		</h:column>
+		
 	</h:dataTable>
+	</h:form>
+	
 	</ui:define>
 	
 	<ui:define name="footer" />

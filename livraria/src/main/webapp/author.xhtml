@@ -11,21 +11,50 @@
 	<ui:define name="header">
 		New Author
 	</ui:define>
-	
+
 	<ui:define name="body">
+
 		<h:form>
+
 			<fieldset>
-				<legend>Author Detailsr</legend>
+				<legend>Add a new Author</legend>
 				<h:panelGrid columns="2">
-                    <h:outputLabel value="Name:" for="name" />
-                   	<h:inputText id="name"  value="#{authorBean.author.name}" />
-                   	<h:commandButton value="Save" action="#{authorBean.save}" />
+					<h:outputLabel value="Name:" for="name" />
+					<h:inputText id="name" value="#{authorBean.author.name}" />
+					<h:commandButton value="Save" action="#{authorBean.save}" />
 				</h:panelGrid>
 			</fieldset>
 		</h:form>
+
+		<fieldset>
+			<legend>Author details</legend>
+			<h:form id="formBooksTable">
+				<h:dataTable value="#{authorBean.authors}" var="author"
+					id="authorsTable">
+					<h:column>
+						<f:facet name="header">Name</f:facet>
+						<h:outputText value="#{author.name}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Edit</f:facet>
+						<h:commandLink value="Edit">
+							<f:setPropertyActionListener target="#{authorBean.book}"
+								value="#{author}" />
+						</h:commandLink>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Remove</f:facet>
+						<h:commandLink value="Remove" action="#{bookBean.remove(author)}" />
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</fieldset>
+
 	</ui:define>
-	
-	<ui:define name="footer"/>
+
+	<ui:define name="footer" />
 
 </ui:composition>
 </html>

@@ -29,14 +29,22 @@ public class BookBean implements Serializable {
 //			throw new RuntimeException("The book needs a Author."); //
 			FacesContext.getCurrentInstance().addMessage("author", new FacesMessage("Book require at laeast one Author"));
 		}
-		
+		if(this.book.getId() == null) {
 		new DAO<Book>(Book.class).add(this.book);
+		} else {
+			new DAO<Book>(Book.class).update(this.book);
+		}
 		this.book = new Book();
+	}
+	
+	public void remove(Book book) {
+		System.out.println("Removing book " + book);
+		new DAO<Book>(Book.class).remove(book);
 	}
 	
 	public String formAuthor() {
 		System.out.println("Calling form Author");
-		return "author?faces-redirect~true";
+		return "author?faces-redirect=true";
 	}
 	
 	//Gets and Sets//
@@ -57,6 +65,10 @@ public class BookBean implements Serializable {
 		Author author = new DAO<Author>(Author.class).searchForId(this.authorId);
 		this.book.addAuthor(author);
 		System.out.println("Write for: " + author.getName());
+	}
+	
+	public void removeAuthor(Author author) {
+		this.book.removeAuthor(author);
 	}
 	
 	public Integer getAuthorId() {
